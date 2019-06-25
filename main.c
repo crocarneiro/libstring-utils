@@ -48,6 +48,20 @@ int indexOf(char *string, char *keyword, int *start, int *end)
     return 1;
 }
 
+char *substr(char *string, int ini, int end)
+{
+    char *newString = (char *)malloc(sizeof(char) * (end - ini));
+    int i, j = 0;
+
+    for(i = ini; i <= end; i++)
+    {
+        newString[j] = string[i];
+        j++;
+    }
+
+    return newString;
+}
+
 int main(int argc, char *argv[])
 {
     int ini, end;
@@ -55,6 +69,8 @@ int main(int argc, char *argv[])
     indexOf("Hello world.", "", &ini, &end);
     printf("Ini: %d.\n", ini);
     printf("End: %d.\n", end);
+
+    printf("%s", substr("Hello World", 5, 10));
 
     return 0;
 }
