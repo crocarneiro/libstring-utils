@@ -21,3 +21,7 @@ src/.deps/*
 src/.dirstamp
 autom4te.cache/*
 libstring-utils.a
+tests/RUN.sh.log
+tests/RUN.sh.trs
+test-driver
+test-suite.log
