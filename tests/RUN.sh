@@ -58,8 +58,22 @@ gcc -o replaceTests replaceTests.o string-utils.o unity.o
 gcc -o substrTests substrTests.o string-utils.o unity.o
 
 # Run tests
-./indexOfTests
-./replaceTests
-./substrTests
+if [[ "$(./indexOfTests)" =~ "FAIL" ]]
+then
+    ./indexOfTests
+    exit 1
+fi
+
+if [[ "$(./replaceTests)" =~ "FAIL" ]]
+then
+    ./replaceTests
+    exit 1
+fi
+
+if [[ "$(./substrTests)" =~ "FAIL" ]]
+then
+    ./substrTests
+    exit 1
+fi
 
 clean_directory
