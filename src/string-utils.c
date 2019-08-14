@@ -93,8 +93,9 @@ void validateSubstrParams(char *string, int ini, int end)
 
 char *substr(char *string, int ini, int end)
 {
-    char *newString = (char *)malloc(sizeof(char) * (end - ini));
     int i, j = 0;
+    char *newString = (char *)malloc(sizeof(char) * (end - ini));
+    strcpy(newString, "\0");
 
     validateSubstrParams(string, ini, end);
 
@@ -103,6 +104,7 @@ char *substr(char *string, int ini, int end)
         newString[j] = string[i];
         j++;
     }
+    newString[j] = '\0';
 
     return newString;
 }
@@ -115,6 +117,7 @@ char *replace(char *string, char *oldChar, char *newChar)
     int stringLen = strlen(string);
     int newStringLen = stringLen + (oldCharLen - newCharLen);
     char *newString = (char *) malloc(sizeof(char) * newStringLen);
+    strcpy(newString, "\0");
 
     if(indexOf(string, oldChar, &ini, &end) != 0)
         return string;
@@ -141,8 +144,5 @@ char *replace(char *string, char *oldChar, char *newChar)
         count++;
     } while(indexOf(newString, oldChar, &ini, &end) == 0);
 
-    if(count == 0)
-        return string;
-    else
-        return newString;
+    return (count == 0) ? string : newString;
 }
