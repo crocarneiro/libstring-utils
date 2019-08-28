@@ -4,6 +4,7 @@ main
 substrTests
 indexOfTests
 replaceTests
+indexOfReverseTests
 aclocal.m4
 compile
 configure

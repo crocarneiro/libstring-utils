@@ -70,6 +70,60 @@ int indexOf(char *string, char *keyword, int *start, int *end)
     return 1;
 }
 
+int indexOfReverse(char *string, char *keyword, int *start, int *end)
+{
+    int checkpoint, keywordLength = strlen(keyword), stringLength = strlen(string);
+    int i, j = keywordLength - 1;
+    int dummyStart, dummyEnd;
+
+    validateIndexOfParams(string, keyword);
+
+    if(indexOf(string, keyword, &dummyStart, &dummyEnd) == 1)
+        return 1;
+
+    for(i = stringLength - 1; i >= 0; i--)
+    {
+        if(string[i] == keyword[j])
+        {
+            if(j == keywordLength - 1)
+                checkpoint = i;
+
+            if(j == 0)
+            {
+                *end = checkpoint + 1;
+                *start = i;
+
+                return 0;
+            }
+
+            j--;
+        }
+        else
+        {
+            j = keywordLength - 1;
+            checkpoint = 0;
+
+            if(string[i] == keyword[j])
+            {
+                if(j == keywordLength)
+                    checkpoint = i;
+
+                if(j == 0)
+                {
+                    *end = checkpoint;
+                    *start = i;
+
+                    return 0;
+                }
+
+                j--;
+            }
+        }
+    }
+
+    return 1;
+}
+
 void validateSubstrParams(char *string, int ini, int end)
 {
     if(strlen(string) == 0 && string[0] == '\0')

@@ -20,6 +20,16 @@ clean_directory()
         rm indexOfTests
     fi
 
+    if [ -e indexOfReverseTests.o ]
+    then
+        rm indexOfReverseTests.o
+    fi
+
+    if [ -e indexOfReverseTests ]
+    then
+        rm indexOfReverseTests
+    fi
+
     if [ -e replaceTests.o ]
     then
         rm replaceTests.o
@@ -49,30 +59,38 @@ gcc -c tests/unity/unity.c -Wall -pedantic -lm -std=c99
 
 # Compile tests
 gcc -c tests/indexOfTests.c -Wall -pedantic -lm -std=c99
+gcc -c tests/indexOfReverseTests.c -Wall -pedantic -lm -std=c99
 gcc -c tests/replaceTests.c -Wall -pedantic -lm -std=c99
 gcc -c tests/substrTests.c -Wall -pedantic -lm -std=c99
 
 # Link tests
 gcc -o indexOfTests indexOfTests.o string-utils.o unity.o
+gcc -o indexOfReverseTests indexOfReverseTests.o string-utils.o unity.o
 gcc -o replaceTests replaceTests.o string-utils.o unity.o
 gcc -o substrTests substrTests.o string-utils.o unity.o
 
 # Run tests
+./indexOfTests
 if [[ "$(./indexOfTests)" =~ "FAIL" ]]
 then
-    ./indexOfTests
     exit 1
 fi
 
+./indexOfReverseTests
+if [[ "$(./indexOfReverseTests)" =~ "FAIL" ]]
+then
+    exit 1
+fi
+
+./replaceTests
 if [[ "$(./replaceTests)" =~ "FAIL" ]]
 then
-    ./replaceTests
     exit 1
 fi
 
+./substrTests
 if [[ "$(./substrTests)" =~ "FAIL" ]]
 then
-    ./substrTests
     exit 1
 fi
 
