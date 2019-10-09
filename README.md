@@ -7,3 +7,8 @@
 and move into the repo
 
 ```cd libstring-utils ```
+
+make sure you've build-essential install
+
+- On ubuntu : ```sudo apt-get install build-essential```
+- On Archlinux : ``` yay build-essential```
