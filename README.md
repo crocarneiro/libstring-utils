@@ -17,8 +17,8 @@ Run makefile :
 
 ``` autoreconf ```
 
-and run
+and run : 
 ```mkdir build && cd build ```<br>
-``` ../configure ```$
-``` make ```$
-``` sudo make install ```$
+``` ../configure ```<br>
+``` make ```<br>
+``` sudo make install ```<br>
