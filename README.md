@@ -12,3 +12,13 @@ make sure you've build-essential install
 
 - On ubuntu : ```sudo apt-get install build-essential```
 - On Archlinux : ``` yay build-essential```
+
+Run makefile : 
+
+``` autoreconf ```
+
+and run
+```mkdir build && cd build ```
+``` ../configure ```
+``` make ```
+``` sudo make install ```
