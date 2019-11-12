@@ -15,7 +15,7 @@ make sure you've build-essential install
 
 Run makefile : 
 
-``` autoreconf ```
+``` autoreconf --install```
 
 and run : 
 
