@@ -16,6 +16,11 @@ void shouldCorrectlyRpadString()
     TEST_ASSERT_EQUAL_STRING("helloworld", rpad("hello", "world", 10));
 }
 
+void shouldTruncThePadString()
+{
+    TEST_ASSERT_EQUAL_STRING("hello worl", rpad("hello ", "world", 10));
+}
+
 int main()
 {
     UNITY_BEGIN();
@@ -23,6 +28,7 @@ int main()
     RUN_TEST(shouldCorrectlyRpadSingleCharacter);
     RUN_TEST(shouldReturnTheExactlySameString);
     RUN_TEST(shouldCorrectlyRpadString);
+    RUN_TEST(shouldTruncThePadString);
 
     return UNITY_END();
 }

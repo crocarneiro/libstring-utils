@@ -44,6 +44,18 @@ char *substr(char *string, int ini, int end);
  */
 char *replace(char *string, char *oldChar, char *newChar);
 
-char *rpad(char *string, char *pad_string, int padded_length);
+
+/*
+ * This function, as the name suggests, pads the right side of a given string with padString until the string length
+ * reaches the paddedLength.
+ * If the paddedLength is zero or negative your program will exit with 1 and prints a error message.
+ * If the length of the string is actually equal or greater than the paddedLength the function will just
+ * return the given string as it is.
+ * string: the base string.
+ * padString: the string with wich the base string will be padded. The padString will be truncated if the length of the
+ * string reaches the paddedLength.
+ * paddedLength: the length wich the final padded string must have.
+ */
+char *rpad(char *string, char *padString, int paddedLength);
 
 # endif

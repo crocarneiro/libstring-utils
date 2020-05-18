@@ -216,11 +216,19 @@ char *rpad(char *string, char *padString, int paddedLength)
 
     if(strlen(string) >= paddedLength) return string;
 
-    char *newString = (char *) malloc(sizeof(char) * paddedLength);
-    strcpy(newString, string);
+    char *paddedString = (char *) malloc(sizeof(char) * paddedLength);
+    strcpy(paddedString, string);
 
-    while(strlen(newString) < paddedLength)
-        strcat(newString, padString);
+    int n = strlen(string), i;
+    while(strlen(paddedString) < paddedLength)
+        for(i = 0; i < strlen(padString); i++)
+        {
+            int actualSize = strlen(paddedString);
+            if(actualSize == paddedLength) break;
 
-    return newString;
+            paddedString[n] = padString[i];
+            n++;
+        }
+
+    return paddedString;
 }
