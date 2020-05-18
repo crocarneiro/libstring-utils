@@ -200,3 +200,27 @@ char *replace(char *string, char *oldChar, char *newChar)
 
     return (count == 0) ? string : newString;
 }
+
+void validatePaddedLength(int paddedLentgh)
+{
+    if(paddedLentgh <= 0)
+    {
+        puts("The padded length cannot be zero or negative.");
+        exit(1);
+    }
+}
+
+char *rpad(char *string, char *padString, int paddedLength)
+{
+    validatePaddedLength(paddedLength);
+
+    if(strlen(string) >= paddedLength) return string;
+
+    char *newString = (char *) malloc(sizeof(char) * paddedLength);
+    strcpy(newString, string);
+
+    while(strlen(newString) < paddedLength)
+        strcat(newString, padString);
+
+    return newString;
+}

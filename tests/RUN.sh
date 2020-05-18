@@ -62,12 +62,14 @@ gcc -c tests/indexOfTests.c -Wall -pedantic -lm -std=c99
 gcc -c tests/indexOfReverseTests.c -Wall -pedantic -lm -std=c99
 gcc -c tests/replaceTests.c -Wall -pedantic -lm -std=c99
 gcc -c tests/substrTests.c -Wall -pedantic -lm -std=c99
+gcc -c tests/rpadTests.c -Wall -pedantic -lm -std=c99
 
 # Link tests
 gcc -o indexOfTests indexOfTests.o string-utils.o unity.o
 gcc -o indexOfReverseTests indexOfReverseTests.o string-utils.o unity.o
 gcc -o replaceTests replaceTests.o string-utils.o unity.o
 gcc -o substrTests substrTests.o string-utils.o unity.o
+gcc -o rpadTests rpadTests.o string-utils.o unity.o
 
 # Run tests
 ./indexOfTests
@@ -90,6 +92,12 @@ fi
 
 ./substrTests
 if [[ "$(./substrTests)" =~ "FAIL" ]]
+then
+    exit 1
+fi
+
+./rpadTests
+if [[ "$(./rpadTests)" =~ "FAIL" ]]
 then
     exit 1
 fi

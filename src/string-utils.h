@@ -44,4 +44,6 @@ char *substr(char *string, int ini, int end);
  */
 char *replace(char *string, char *oldChar, char *newChar);
 
+char *rpad(char *string, char *pad_string, int padded_length);
+
 # endif
