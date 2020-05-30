@@ -57,7 +57,7 @@ Function to find the start and end position of a string starting from the end.
 
 `start`: Position where the first keyword occurrence starts. (Out parameter, you should pass it by reference)
 
- `end`: Posistion where the first keyword occurrence ends. (Out parameter, you should pass it by reference)
+`end`: Posistion where the first keyword occurrence ends. (Out parameter, you should pass it by reference)
 
  #### Return:
  > 0 if the keyword exists in the string.
