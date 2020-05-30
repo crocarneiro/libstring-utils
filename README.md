@@ -1,3 +1,5 @@
+[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/X8X41FYY7)
+
 # Index
 * [About](#About)
 * [Installation](#Installation)
