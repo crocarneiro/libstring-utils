@@ -1,6 +1,11 @@
 # ifndef _STRING_UTILS_H_
 # define _STRING_UTILS_H_
 
+typedef struct str_list {
+    char *string;
+    struct str_list *next;
+} STR_LIST_NODE;
+
 /*
  * Function to find the start and end position of a string.
  * string: The string where you are looking for.
@@ -44,7 +49,6 @@ char *substr(char *string, int ini, int end);
  */
 char *replace(char *string, char *oldChar, char *newChar);
 
-
 /*
  * This function, as the name suggests, pads the right side of a given string with padString until the string length
  * reaches the paddedLength.
@@ -57,5 +61,39 @@ char *replace(char *string, char *oldChar, char *newChar);
  * paddedLength: the length wich the final padded string must have.
  */
 char *rpad(char *string, char *padString, int paddedLength);
+
+/*
+ * This function split a string in every occurrence of a given delimiter.
+ * string: The string which will be splited.
+ * delimiter: the delimiter where the string will be splited.
+ * The return of this function is a STR_LIST_NODE struct, which is the head
+ * of a single linked list.
+ * If there is not any occurrence of delimiter in string, then the function
+ * will return NULL.
+ */
+STR_LIST_NODE *str_split(char *string, char *delimiter);
+
+/*
+ * This function iterate every node of the given single linked list
+ * freeing the allocated memory.
+ * head: The first node of the single linked list.
+ */
+void free_str_list(STR_LIST_NODE *head);
+
+/*
+ * This function initialize and return a pointer to a STR_LIST_NODE with the
+ * value of the given string.
+ */
+STR_LIST_NODE *new_str_list_node(char *string);
+
+/*
+ * This function insert in the first position of the given single linked
+ * list a new STR_LIST_NODE element.
+ * head: The first node of the list.
+ * new: The node to be inserted.
+ * This function return a STR_LIST_NODE for the first node of the list,
+ * which will be the new element.
+ */
+STR_LIST_NODE *insert_str_list_node(STR_LIST_NODE *head, STR_LIST_NODE *new);
 
 # endif

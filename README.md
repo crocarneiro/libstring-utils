@@ -15,13 +15,39 @@ With libstring-utils it's all play and fun, BUT BE CAREFUL:
 > REMEMBER TO `FREE()` THE RESULT WHEN YOU DON'T NEED IT
 > ANYMORE
 
-Currently the libstring-utils has the following functions:
+<br />
+<br />
+CURRENTLY THE LIBSTRING-UTILS HAS THE FOLLOWING TYPES:
 
+* [STR_LIST_NODE](#STR_LIST_NODE)
+
+## STR_LIST_NODE
+This type represents a node of a single linked list. With this type you can create and manage a single linked list of strings.
+To make things easier you can use the function [new_str_list_node](#new_str_list_node) to initialize a new "instance" of `STR_LIST_NODE`. THIS FUNCTION WILL ALLOCATE THE MEMORY NECESSARY. To insert a new node in the list you can use the function [new_str_list_node](#new_str_list_node). WHEN YOU DO NOT NEED THE LIST ANYMORE, REMEMBER TO FREE THE MEMORY USING THE FUNCTION [free_str_list](#free_str_list). For a full example of usage check the function [str_split](#str_split) out.
+
+<br />
+<br />
+CURRENTLY THE LIBSTRING-UTILS HAS THE FOLLOWING FUNCTIONS:
+
+* [free_str_list](#free_str_list)
 * [indexOf](#indexOf)
 * [indexOfReverse](#indexOfReverse)
+* [insert_str_list_node](#insert_str_list_node)
+* [new_str_list_node](#new_str_list_node)
 * [replace](#replace)
 * [rpad](#rpad)
+* [str_split](#str_split)
 * [substr](#substr)
+
+## free_str_list
+This function iterate every node of the given single linked list freeing the allocated memory.
+
+#### Prototype:
+```c
+void free_str_list(STR_LIST_NODE *head);
+```
+
+`head`: The first node of the single linked list.
 
 ## indexOf
 Function to find the start and end position of a string.
@@ -66,6 +92,35 @@ Function to find the start and end position of a string starting from the end.
 
  > 1 if the keyword does not.
 
+## insert_str_list_node
+This function insert in the first position of the given single linked list a new STR_LIST_NODE element.
+
+#### Prototype:
+```c
+STR_LIST_NODE *insert_str_list_node(STR_LIST_NODE *head, STR_LIST_NODE *new);
+```
+
+`head`: The first node of the list.
+
+`new`: The node to be inserted.
+
+#### Return:
+> This function return a STR_LIST_NODE for the first node of the list, which will be the new element.
+
+#### Usage Example:
+For a full example of usage of this function check the function [str_split](#str_split) out.
+
+## new_str_list_node
+This function initialize and return a pointer to a `STR_LIST_NODE` with the value of the given string.
+
+#### Prototype:
+```c
+STR_LIST_NODE *new_str_list_node(char *string);
+```
+
+#### Usage Example:
+For a full example of usage of this function check the function [str_split](#str_split) out.
+
 ## replace
 This function replaces all the occurrences of a string from other string for another string.
 
@@ -101,6 +156,47 @@ char *rpad(char *string, char *padString, int paddedLength);
 
 #### Return:
 > The padded string.
+
+## str_split
+This function split a string in every occurrence of a given delimiter.
+
+#### Prototype:
+```c
+STR_LIST_NODE *str_split(char *string, char *delimiter);
+```
+
+`string`: The string which will be splited.
+
+#### Return:
+> The return of this function is a `STR_LIST_NODE` struct, which is the head of a single linked list.
+
+> If there is not any occurrence of delimiter in string, then the function will return `NULL`.
+
+#### Usage Example:
+The following program split the string "2; 3; 4" in every occurrence of "; " in order to sum the squares of the integers.
+```c
+int main(int argc, char *argv[])
+{
+    int sumOfSquares = 0;
+    char string[] = "2; 3; 4"; /* 2*2 + 3*3 + 4*4 = 29*/
+    STR_LIST_NODE *str_list_head = str_split(string, "; "), *currentNode = NULL;
+
+    currentNode = str_list_head;
+    while(currentNode)
+    {
+        int integer = atoi(currentNode->string);
+        sumOfSquares = sumOfSquares + integer * integer;
+
+        currentNode = currentNode->next;
+    }
+    printf("Sum of squares: %d\n", sumOfSquares);
+
+    //REMEMBER TO FREE THE MEMORY ALLOCATED
+    free_str_list(str_list_head);
+
+    return 0;
+}
+```
 
 ## substr
 This function return a piece of an string which starts and ends at the given parameters.

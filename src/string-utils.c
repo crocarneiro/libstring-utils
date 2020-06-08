@@ -1,15 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "string-utils.h"
 
 void validateIndexOfParams(char *string, char *keyword)
 {
-    if (strlen(string) == 0 && string[0] == '\0')
-    {
-        fprintf(stderr, "You should pass a string for search.\n");
-        exit(1);
-    }
-
     if (strlen(keyword) == 0 && keyword[0] == '\0')
     {
         fprintf(stderr, "You should pass a keyword for search.\n");
@@ -24,6 +19,9 @@ int indexOf(char *string, char *keyword, int *start, int *end)
     int keywordLength = strlen(keyword) - 1;
 
     validateIndexOfParams(string, keyword);
+
+    if (strlen(string) == 0 && string[0] == '\0')
+        return 1;
 
     for (i = 0; i <= stringLength; i++)
     {
@@ -231,4 +229,65 @@ char *rpad(char *string, char *padString, int paddedLength)
         }
 
     return paddedString;
+}
+
+STR_LIST_NODE *insert_str_list_node(STR_LIST_NODE *head, STR_LIST_NODE *new)
+{
+    if(head == NULL)
+    {
+        head = new;
+        head->next = NULL;
+    }
+    else
+    {
+        STR_LIST_NODE *previous = head;
+        head = new;
+        head -> next = previous;
+    }
+
+    return head;
+}
+
+STR_LIST_NODE *new_str_list_node(char *string)
+{
+    STR_LIST_NODE *newNode = malloc(sizeof(STR_LIST_NODE));
+    newNode->string = (char *) malloc(sizeof(strlen(string)));
+    strcpy(newNode->string, string);
+
+    return newNode;
+}
+
+void free_str_list(STR_LIST_NODE *head)
+{
+    STR_LIST_NODE *currentNode = head;
+    while(currentNode)
+    {
+        free(currentNode->string);
+        currentNode = currentNode->next;
+    }
+}
+
+STR_LIST_NODE *str_split(char *string, char *delimiter)
+{
+    int start, end;
+    char *currentString = (char *)malloc(sizeof(strlen(string)));
+    STR_LIST_NODE *head = NULL;
+
+    if(indexOf(string, delimiter, &start, &end) == 1)
+        return NULL;
+
+    strcpy(currentString, string);
+    while(indexOf(currentString, delimiter, &start, &end) == 0)
+    {
+        char *newString = substr(currentString, 0, start);
+        STR_LIST_NODE *newNode = new_str_list_node(newString);
+        head = insert_str_list_node(head, newNode);
+
+        strcpy(currentString, substr(currentString, end, strlen(currentString)));
+    }
+
+    STR_LIST_NODE *newNode = new_str_list_node(currentString);
+    head = insert_str_list_node(head, newNode);
+
+    return head;
 }
