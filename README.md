@@ -23,7 +23,7 @@ CURRENTLY THE LIBSTRING-UTILS HAS THE FOLLOWING TYPES:
 
 ## STR_LIST_NODE
 This type represents a node of a single linked list. With this type you can create and manage a single linked list of strings.
-To make things easier you can use the function [new_str_list_node](#new_str_list_node) to initialize a new "instance" of `STR_LIST_NODE`. THIS FUNCTION WILL ALLOCATE THE MEMORY NECESSARY. To insert a new node in the list you can use the function [new_str_list_node](#new_str_list_node). WHEN YOU DO NOT NEED THE LIST ANYMORE, REMEMBER TO FREE THE MEMORY USING THE FUNCTION [free_str_list](#free_str_list). For a full example of usage check the function [str_split](#str_split) out.
+To make things easier you can use the function [new_str_list_node](#new_str_list_node) to initialize a new "instance" of `STR_LIST_NODE`. THIS FUNCTION WILL ALLOCATE THE MEMORY NECESSARY. To insert a new node in the list you can use the function [insert_str_list_node](#insert_str_list_node). WHEN YOU DO NOT NEED THE LIST ANYMORE, REMEMBER TO FREE THE MEMORY USING THE FUNCTION [free_str_list](#free_str_list). For a full example of usage check the function [str_split](#str_split) out.
 
 <br />
 <br />
