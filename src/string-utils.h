@@ -7,6 +7,19 @@ typedef struct str_list {
 } STR_LIST_NODE;
 
 /*
+ * This enum has the possible return values for the idxof or the idxof_reverse functions.
+ */
+enum idxof_results {
+    SUCCESS = 0,
+    FOUND = 0,
+    NOT_FOUND = -1,
+    INVALID_STRING = 2,
+    INVALID_KEYWORD = 3,
+    INVALID_INDEX = 4,
+    INVALID_PADDED_LEN = 5
+};
+
+/*
  * Function to find the start and end position of a string.
  * string: The string where you are looking for.
  * keyword: The string which you are looking for.
@@ -15,8 +28,23 @@ typedef struct str_list {
  * return:
  *      0 if the keyword exists in the string.
  *      1 if the keyword does not.
+ * Example:
+ *     _____________________________________________________
+ *    |                                                     |
+ *    |H |E |L |L |O |  |W |O |R |L |D |  |H |E |L |L |O |\0|
+ *    |0 |1 |2 |3 |4 |5 |6 |7 |8 |9 |10|11|12|13|14|15|16|17|
+ *    |_____________________________________________________|
+ *
+ * idxof("HELLO WORLD HELLO", "HELLO", &start, &end);
+ * printf("start = %d\nend = %d", start, end);
+ *
+ * Output:
+ * start = 0
+ * end = 5
  */
-int indexOf(char *string, char *keyword, int *start, int *end);
+int
+idxof(char *string, char *keyword, int *start, int *end);
+
 
 /*
  * Function to find the start and end position of a string starting from the end.
@@ -27,8 +55,22 @@ int indexOf(char *string, char *keyword, int *start, int *end);
  * return:
  *      0 if the keyword exists in the string.
  *      1 if the keyword does not.
+ * Example:
+ *     _____________________________________________________
+ *    |H |E |L |L |O |  |W |O |R |L |D |  |H |E |L |L |O |\0|
+ *    |0 |1 |2 |3 |4 |5 |6 |7 |8 |9 |10|11|12|13|14|15|16|17|
+ *    |_____________________________________________________|
+ *
+ * idxof_reverse("HELLO WORLD HELLO", "HELLO", &start, &end);
+ * printf("start = %d\nend = %d", start, end);
+ *
+ * Output:
+ * start = 12
+ * end = 16
  */
-int indexOfReverse(char *string, char *keyword, int *start, int *end);
+int
+idxof_reverse(char *string, char *keyword, int *start, int *end);
+
 
 /*
  * This function return a piece of an string which starts and ends at the
@@ -39,7 +81,9 @@ int indexOfReverse(char *string, char *keyword, int *start, int *end);
  * return:
  *      A string with the characters of the given string from "ini" till "end" position.
  */
-char *substr(char *string, int ini, int end);
+int
+substr(char *dest, char *string, int ini, int end);
+
 
 /*
  * This function replaces all the occurrences of a string from another string for another string, you know.
@@ -47,7 +91,9 @@ char *substr(char *string, int ini, int end);
  * oldChar: the string wich you want replace from the base string.
  * newChar: the string which you want instead of the oldChar.
  */
-char *replace(char *string, char *oldChar, char *newChar);
+int
+replace(char *dest, char *string, char *oldChar, char *newChar);
+
 
 /*
  * This function, as the name suggests, pads the right side of a given string with padString until the string length
@@ -60,7 +106,38 @@ char *replace(char *string, char *oldChar, char *newChar);
  * string reaches the paddedLength.
  * paddedLength: the length wich the final padded string must have.
  */
-char *rpad(char *string, char *padString, int paddedLength);
+int
+rpad(char *dest, char *string, char *padString, int paddedLength);
+
+
+/*
+ * This function iterate every node of the given single linked list
+ * freeing the allocated memory.
+ * head: The first node of the single linked list.
+ */
+void
+free_str_list(STR_LIST_NODE *head);
+
+
+/*
+ * This function insert in the first position of the given single linked
+ * list a new STR_LIST_NODE element.
+ * head: The first node of the list.
+ * new: The node to be inserted.
+ * This function return a STR_LIST_NODE for the first node of the list,
+ * which will be the new element.
+ */
+STR_LIST_NODE *
+insert_str_list_node(STR_LIST_NODE *head, STR_LIST_NODE *new);
+
+
+/*
+ * This function initialize and return a pointer to a STR_LIST_NODE with the
+ * value of the given string.
+ */
+STR_LIST_NODE *
+new_str_list_node(char *string);
+
 
 /*
  * This function split a string in every occurrence of a given delimiter.
@@ -71,29 +148,7 @@ char *rpad(char *string, char *padString, int paddedLength);
  * If there is not any occurrence of delimiter in string, then the function
  * will return NULL.
  */
-STR_LIST_NODE *str_split(char *string, char *delimiter);
-
-/*
- * This function iterate every node of the given single linked list
- * freeing the allocated memory.
- * head: The first node of the single linked list.
- */
-void free_str_list(STR_LIST_NODE *head);
-
-/*
- * This function initialize and return a pointer to a STR_LIST_NODE with the
- * value of the given string.
- */
-STR_LIST_NODE *new_str_list_node(char *string);
-
-/*
- * This function insert in the first position of the given single linked
- * list a new STR_LIST_NODE element.
- * head: The first node of the list.
- * new: The node to be inserted.
- * This function return a STR_LIST_NODE for the first node of the list,
- * which will be the new element.
- */
-STR_LIST_NODE *insert_str_list_node(STR_LIST_NODE *head, STR_LIST_NODE *new);
+STR_LIST_NODE *
+str_split(char *string, char *delimiter);
 
 # endif

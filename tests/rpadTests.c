@@ -3,22 +3,34 @@
 
 void shouldCorrectlyRpadSingleCharacter()
 {
-    TEST_ASSERT_EQUAL_STRING("test******", rpad("test", "*", 10));
+    char new_string[11];
+    rpad(new_string, "test", "*", 10);
+
+    TEST_ASSERT_EQUAL_STRING("test******", new_string);
 }
 
 void shouldReturnTheExactlySameString()
 {
-    TEST_ASSERT_EQUAL_STRING("1234567891011", rpad("1234567891011", "*", 10));
+    char new_string[11];
+    rpad(new_string, "1234567891011", "*", 10);
+
+    TEST_ASSERT_EQUAL_STRING("1234567891011", new_string);
 }
 
 void shouldCorrectlyRpadString()
 {
-    TEST_ASSERT_EQUAL_STRING("helloworld", rpad("hello", "world", 10));
+    char new_string[11];
+    rpad(new_string, "hello", "world", 10);
+
+    TEST_ASSERT_EQUAL_STRING("helloworld", new_string);
 }
 
 void shouldTruncThePadString()
 {
-    TEST_ASSERT_EQUAL_STRING("hello worl", rpad("hello ", "world", 10));
+    char new_string[11];
+    rpad(new_string, "hello ", "world", 10);
+
+    TEST_ASSERT_EQUAL_STRING("hello worl", new_string);
 }
 
 int main()

@@ -3,47 +3,62 @@
 
 void shouldReplaceASimpleString()
 {
-    char baseString[] = "Hello Mundo";
-    char oldChar[] = "Mundo";
-    char newChar[] = "World";
+    char base_string[] = "Hello Mundo";
+    char new_string[12];
+    char old_char[] = "Mundo";
+    char new_char[] = "World";
 
-    TEST_ASSERT_EQUAL_STRING("Hello World", replace(baseString, oldChar, newChar));
+    replace(new_string, base_string, old_char, new_char);
+
+    TEST_ASSERT_EQUAL_STRING("Hello World", new_string);
 }
 
 void shouldReplaceAWhitespace()
 {
-    char baseString[] = "Hello World";
-    char oldChar[] = " ";
-    char newChar[] = ";";
+    char base_string[] = "Hello World";
+    char new_string[12];
+    char old_char[] = " ";
+    char new_char[] = ";";
 
-    TEST_ASSERT_EQUAL_STRING("Hello;World", replace(baseString, oldChar, newChar));
+    replace(new_string, base_string, old_char, new_char);
+
+    TEST_ASSERT_EQUAL_STRING("Hello;World", new_string);
 }
 
 void shouldReplaceAStringWithSpecialCharecter()
 {
-    char baseString[] = "(% 1";
-    char oldChar[] = "% 1";
-    char newChar[] = " %1";
+    char base_string[] = "(% 1";
+    char new_string[5];
+    char old_char[] = "% 1";
+    char new_char[] = " %1";
 
-    TEST_ASSERT_EQUAL_STRING("( %1", replace(baseString, oldChar, newChar));
+    replace(new_string, base_string, old_char, new_char);
+
+    TEST_ASSERT_EQUAL_STRING("( %1", new_string);
 }
 
 void shouldReplaceAStringWithSpecialCharecter2()
 {
-    char baseString[] = "( %1";
-    char oldChar[] = "( %";
-    char newChar[] = "(%";
+    char base_string[] = "( %1";
+    char new_string[4];
+    char old_char[] = "( %";
+    char new_char[] = "(%";
 
-    TEST_ASSERT_EQUAL_STRING("(%1", replace(baseString, oldChar, newChar));
+    replace(new_string, base_string, old_char, new_char);
+
+    TEST_ASSERT_EQUAL_STRING("(%1", new_string);
 }
 
 void shouldReplaceAStringWithSpecialCharecter3()
 {
-    char baseString[] = "Sintonizando títulos (%1/% 2).";
-    char oldChar[] = "% 2";
-    char newChar[] = "%2";
+    char base_string[] = "Sintonizando títulos (%1/% 2).";
+    char new_string[31];
+    char old_char[] = "% 2";
+    char new_char[] = "%2";
 
-    TEST_ASSERT_EQUAL_STRING("Sintonizando títulos (%1/%2).", replace(baseString, oldChar, newChar));
+    replace(new_string, base_string, old_char, new_char);
+
+    TEST_ASSERT_EQUAL_STRING("Sintonizando títulos (%1/%2).", new_string);
 }
 
 int main()

@@ -3,14 +3,22 @@
 
 void shouldReturnASingleCharacter()
 {
-    char baseString[] = "Hello World";
-    TEST_ASSERT_EQUAL_STRING(" ", substr(baseString, 5, 6));
+    char base_string[] = "Hello World";
+    char new_string[2];
+
+    substr(new_string, base_string, 5, 6);
+
+    TEST_ASSERT_EQUAL_STRING(" ", new_string);
 }
 
 void shouldReturnAString()
 {
-    char baseString[] = "Hello World";
-    TEST_ASSERT_EQUAL_STRING("Hello", substr(baseString, 0, 5));
+    char base_string[] = "Hello World";
+    char new_string[6];
+
+    substr(new_string, base_string, 0, 5);
+
+    TEST_ASSERT_EQUAL_STRING("Hello", new_string);
 }
 
 int main()

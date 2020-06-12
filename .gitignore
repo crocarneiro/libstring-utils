@@ -29,3 +29,5 @@ test-driver
 test-suite.log
 .devcontainer/
 splitTests
+idxof_reverseTests
+idxofTests

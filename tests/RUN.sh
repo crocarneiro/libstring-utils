@@ -63,33 +63,37 @@ gcc -c src/string-utils.c -Wall -pedantic -lm -std=c99
 gcc -c tests/unity/unity.c -Wall -pedantic -lm -std=c99
 
 # Compile tests
-gcc -c tests/indexOfTests.c -Wall -pedantic -lm -std=c99
-gcc -c tests/indexOfReverseTests.c -Wall -pedantic -lm -std=c99
+gcc -c tests/idxofTests.c -Wall -pedantic -lm -std=c99
+gcc -c tests/idxof_reverseTests.c -Wall -pedantic -lm -std=c99
 gcc -c tests/replaceTests.c -Wall -pedantic -lm -std=c99
 gcc -c tests/substrTests.c -Wall -pedantic -lm -std=c99
 gcc -c tests/rpadTests.c -Wall -pedantic -lm -std=c99
 gcc -c tests/splitTests.c -Wall -pedantic -lm -std=c99
 
 # Link tests
-gcc -o indexOfTests indexOfTests.o string-utils.o unity.o
-gcc -o indexOfReverseTests indexOfReverseTests.o string-utils.o unity.o
+gcc -o idxofTests idxofTests.o string-utils.o unity.o
+gcc -o idxof_reverseTests idxof_reverseTests.o string-utils.o unity.o
 gcc -o replaceTests replaceTests.o string-utils.o unity.o
 gcc -o substrTests substrTests.o string-utils.o unity.o
 gcc -o rpadTests rpadTests.o string-utils.o unity.o
 gcc -o splitTests splitTests.o string-utils.o unity.o
 
+trap 'echo "TESTS FAILED DUE TO SEGMENTATION FAULT. GO CHECK YOUR CODE!!!"; exit 1' ERR SIGSEGV
+
 # Run tests
-./indexOfTests
-if [[ "$(./indexOfTests)" =~ "FAIL" ]]
+./idxofTests
+if [[ "$(./idxofTests)" =~ "FAIL" ]]
 then
     exit 1
 fi
 
-./indexOfReverseTests
-if [[ "$(./indexOfReverseTests)" =~ "FAIL" ]]
+
+./idxof_reverseTests
+if [[ "$(./idxof_reverseTests)" =~ "FAIL" ]]
 then
     exit 1
 fi
+
 
 ./replaceTests
 if [[ "$(./replaceTests)" =~ "FAIL" ]]
@@ -97,11 +101,13 @@ then
     exit 1
 fi
 
+
 ./substrTests
 if [[ "$(./substrTests)" =~ "FAIL" ]]
 then
     exit 1
 fi
+
 
 ./rpadTests
 if [[ "$(./rpadTests)" =~ "FAIL" ]]
@@ -109,9 +115,11 @@ then
     exit 1
 fi
 
+
 ./splitTests
 if [[ "$(./splitTests)" =~ "FAIL" ]]
 then
+    ./splitTests | cat
     exit 1
 fi
 
