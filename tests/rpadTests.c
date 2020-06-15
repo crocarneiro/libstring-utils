@@ -1,9 +1,12 @@
-# include "./unity/unity.h"
-# include "../src/string-utils.h"
+#include <stdlib.h>
+
+#include "./unity/unity.h"
+#include "../src/string-utils.h"
 
 void shouldCorrectlyRpadSingleCharacter()
 {
-    char new_string[11];
+    char *new_string = (char *) malloc(11);
+    new_string[0] = '\0';
     rpad(new_string, "test", "*", 10);
 
     TEST_ASSERT_EQUAL_STRING("test******", new_string);
@@ -11,7 +14,9 @@ void shouldCorrectlyRpadSingleCharacter()
 
 void shouldReturnTheExactlySameString()
 {
-    char new_string[11];
+    char *new_string = (char *) malloc(11);
+    new_string[0] = '\0';
+
     rpad(new_string, "1234567891011", "*", 10);
 
     TEST_ASSERT_EQUAL_STRING("1234567891011", new_string);
@@ -19,7 +24,9 @@ void shouldReturnTheExactlySameString()
 
 void shouldCorrectlyRpadString()
 {
-    char new_string[11];
+    char *new_string = (char *) malloc(11);
+    new_string[0] = '\0';
+
     rpad(new_string, "hello", "world", 10);
 
     TEST_ASSERT_EQUAL_STRING("helloworld", new_string);
@@ -27,7 +34,9 @@ void shouldCorrectlyRpadString()
 
 void shouldTruncThePadString()
 {
-    char new_string[11];
+    char *new_string = (char *) malloc(11);
+    new_string[0] = '\0';
+
     rpad(new_string, "hello ", "world", 10);
 
     TEST_ASSERT_EQUAL_STRING("hello worl", new_string);

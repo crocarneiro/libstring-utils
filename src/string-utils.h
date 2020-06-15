@@ -6,17 +6,17 @@ typedef struct str_list {
     struct str_list *next;
 } STR_LIST_NODE;
 
-/*
- * This enum has the possible return values for the idxof or the idxof_reverse functions.
- */
-enum idxof_results {
-    SUCCESS = 0,
-    FOUND = 0,
-    NOT_FOUND = -1,
-    INVALID_STRING = 2,
-    INVALID_KEYWORD = 3,
-    INVALID_INDEX = 4,
-    INVALID_PADDED_LEN = 5
+enum functions_possible_results {
+    SUCCESS,
+    FOUND,
+    NOT_FOUND,
+    NOTHING_CHANGED,
+    VALID_PARAMS,
+    INVALID_STRING,
+    INVALID_KEYWORD,
+    INVALID_INDEX,
+    INVALID_PADDED_LEN,
+    INVALID_PAD_STRING
 };
 
 /*
@@ -26,8 +26,10 @@ enum idxof_results {
  * start: Position where the first keyword occurrence starts. (Out parameter, you should pass it by reference)
  * end: Posistion where the first keyword occurrence ends. (Out parameter, you should pass it by reference)
  * return:
- *      0 if the keyword exists in the string.
- *      1 if the keyword does not.
+ *      FOUND if the keyword exists in the string.
+ *      NOT_FOUND if the keyword does not exists in the string.
+ *      INVALID_STRING if the string length is zero.
+ *      INVALID_KEYWORD if the keyword length is zero.
  * Example:
  *     _____________________________________________________
  *    |                                                     |
@@ -53,8 +55,10 @@ idxof(char *string, char *keyword, int *start, int *end);
  * start: Position where the first keyword occurrence starts. (Out parameter, you should pass it by reference)
  * end: Posistion where the first keyword occurrence ends. (Out parameter, you should pass it by reference)
  * return:
- *      0 if the keyword exists in the string.
- *      1 if the keyword does not.
+ *      FOUND if the keyword exists in the string.
+ *      NOT_FOUND if the keyword does not exists in the string.
+ *      INVALID_STRING if the string length is zero.
+ *      INVALID_KEYWORD if the keyword length is zero.
  * Example:
  *     _____________________________________________________
  *    |H |E |L |L |O |  |W |O |R |L |D |  |H |E |L |L |O |\0|
@@ -75,11 +79,14 @@ idxof_reverse(char *string, char *keyword, int *start, int *end);
 /*
  * This function return a piece of an string which starts and ends at the
  * given parameters.
+ * dest: Buffer for the new string.
  * string: The string you will extract your substring from.
  * ini: The position where your substring starts.
  * end: The position where your substring ends.
  * return:
- *      A string with the characters of the given string from "ini" till "end" position.
+ *      SUCCESS if the the function run without errors.
+ *      INVALID_STRING if the string length is zero.
+ *      INVALID_INDEX if the ini or end are less than zero or if ini is greater than end.
  */
 int
 substr(char *dest, char *string, int ini, int end);
@@ -87,27 +94,45 @@ substr(char *dest, char *string, int ini, int end);
 
 /*
  * This function replaces all the occurrences of a string from another string for another string, you know.
+ * dest: Buffer for the new string.
  * string: the base string.
- * oldChar: the string wich you want replace from the base string.
- * newChar: the string which you want instead of the oldChar.
+ * oldChar: The string wich you want replace from the base string.
+ * newChar: The string which you want instead of the oldChar.
+ * return:
+ *      SUCCESS if the function run without errors.
+ *
  */
 int
 replace(char *dest, char *string, char *oldChar, char *newChar);
 
 
 /*
- * This function, as the name suggests, pads the right side of a given string with padString until the string length
- * reaches the paddedLength.
- * If the paddedLength is zero or negative your program will exit with 1 and prints a error message.
- * If the length of the string is actually equal or greater than the paddedLength the function will just
- * return the given string as it is.
- * string: the base string.
- * padString: the string with wich the base string will be padded. The padString will be truncated if the length of the
- * string reaches the paddedLength.
- * paddedLength: the length wich the final padded string must have.
+ * This function, as the name suggests, pads the right side of a given string with pad_string until the string length
+ * reaches the padded_length.
+ * If the padded_length is zero or negative your program will exit with 1 and prints a error message.
+ * If the length of the string is actually equal or greater than the padded_length the function will just
+ * copy the given string to dest and return NOTHING_CHANGED.
+ * dest: Buffer for the new string.
+ * string: The base string.
+ * pad_string: The string with wich the base string will be padded. The pad_string will be truncated if the length of the
+ * string reaches the padded_length.
+ * padded_length: The length that the final padded string will have.
+ *  _______________________________________________________________________________________
+ * |                                                                                       |
+ * | OBS: This padded_length is without the \0 char. So if you pass, for instance, 10,     |
+ * | your dest buffer must have allocated at least 11 bytes of memory for it. Despite this,|
+ * | this function does put the \0 at the end of the dest, but if you do not have enough   |
+ * | memory then an UNEXPECTED BEHAVIOUR MAY OCCUR.                                        |
+ * |_______________________________________________________________________________________|
+ * return:
+ *      SUCCESS if the function run without erros.
+ *      INVALID_STRING if the string length is zero.
+ *      INVALID_PAD_STRING if the pad_string length is zero.
+ *      INVALID_PADDED_LEN if the padded_length is less than zero.
+ *      NOTHING_CHANGED if the string length is actually equal or greater than padded_length.
  */
 int
-rpad(char *dest, char *string, char *padString, int paddedLength);
+rpad(char *dest, char *string, char *pad_string, int padded_length);
 
 
 /*
